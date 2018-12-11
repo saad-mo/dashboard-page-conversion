@@ -1,0 +1,72 @@
+@import "./../settings";
+@import "./../mixins";
+@import "./../functions";
+@import "./../icons/mixins";
+
+/*!
+.fd-modal
+    .fd-modal__header
+        .fd-form__title
+    .fd-form__body
+    .fd-form__footer-items
+      .fd-modal__button-primary
+      .fd-modal__button-secondary
+*/
+$block: #{$fd-namespace}-modal;
+.#{$block} {
+  $fd-modal-width: 460px !default;
+  //these are used only to roughly calculate body overflow on compact screens - this can be improved with a flex or grid solution
+  $fd-modal-header-height: 60px !default;
+  $fd-modal-footer-height: 68px !default;
+
+  $fd-modal-border-color: fd-color("neutral", 2) !default;
+  $fd-modal-padding-x: $fd-width--gutter !default;
+  --fd-modal-padding-x: var(--fd-width-gutter);
+  $fd-modal-padding-y: fd-space(4) !default;
+  $fd-modal-inner-content-background: fd-color("background", 2) !default;
+
+  @include fd-reset;
+  max-width: $fd-modal-width;
+  &__content{
+    border-radius: $fd-border-radius;
+    background-color: $fd-modal-inner-content-background;
+  }
+  &__header,
+  &__body,
+  &__footer {
+    @include fd-var-size("padding-left", $fd-modal-padding-x, --fd-modal-padding-x);
+    @include fd-var-size("padding-right", $fd-modal-padding-x, --fd-modal-padding-x);
+    padding-top: $fd-modal-padding-y;
+    padding-bottom: $fd-modal-padding-y;
+  }
+  &__header {
+    position: relative;
+    border-bottom: 1px solid $fd-modal-border-color;
+  }
+  &__title{
+    @include fd-type("1");
+    margin-bottom: 0;
+  }
+  &__close {
+    position: absolute;
+    right: fd-space(1);
+    top: fd-space(2);
+    @include fd-icon("decline", "l");
+    @include fd-button-reset;
+    width: fd-space(9);
+    height: fd-space(9);
+    @include fd-focus;
+  }
+  &__body{
+    max-height: calc(100vh - #{$fd-modal-header-height} - #{$fd-modal-footer-height});
+    overflow-y: auto;
+
+    > p {
+      padding: 0;
+    }
+  }
+  &__footer {
+    text-align: right;
+    border-top: 1px solid $fd-modal-border-color;
+  }
+}

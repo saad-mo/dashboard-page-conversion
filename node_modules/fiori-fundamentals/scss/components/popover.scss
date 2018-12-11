@@ -1,0 +1,141 @@
+@import "./../settings";
+@import "./../mixins";
+@import "./../icons/mixins";
+@import "./../functions";
+
+$fd-popover-top-position:         120% !default;
+$fd-popover-top-position-noarrow: 100% !default;
+$fd-popover-left-position:        0 !default;
+$fd-popover-border:               solid 1px $fd-forms-border-color !default;
+$fd-popover-z-index:              map-get($fd-z-index-levels, "second") !default;
+$fd-popover-background-color:     fd-color(background, 2) !default;
+$fd-popover-box-shadow:           0 0 1px 0 rgba(218 ,222, 230, .50), 0 2px 8px 0 rgba(0, 8, 26, .20) !default;
+
+$fd-popover-arrow-top-back:       -9px !default;
+$fd-popover-arrow-top-front:      -8px !default;
+$fd-popover-arrow-right:          14px !default;
+$fd-popover-arrow-x-offset:       fd-space(2.5) !default;
+
+$fd-popover-transition-params:    $fd-animation--speed !default;
+$fd-popover-transition-distance:  -15px !default;
+
+$block: #{$fd-namespace}-popover;
+.#{$block} {
+    // Consider removing this reset, look into its use and seeing font-size/line-height/color...
+    // @include fd-reset;
+    position: relative;
+    display: inline-block;
+
+    &__control {
+      position: relative;
+      margin-left: 0;
+      @include action-cursor;
+    }
+    &__body {
+      border: $fd-popover-border;
+      position: absolute;
+      white-space: nowrap;
+      z-index: $fd-popover-z-index;
+      border-radius: $fd-border-radius;
+      background-color: $fd-popover-background-color;
+      box-shadow: $fd-popover-box-shadow;
+      opacity: 1;
+      visibility: visible;
+      transition: all $fd-popover-transition-params;
+      left: $fd-popover-left-position;
+      top: $fd-popover-top-position;
+      transform: translateY(0);
+
+      @include fd-rtl {
+        left: auto;
+        right: -3px;  
+
+        &::before {
+          right: $fd-popover-arrow-x-offset;
+        }
+        &::after {
+          right: $fd-popover-arrow-x-offset;
+        }
+      }   
+            
+      &::before {
+        @include triangle(13px 8px, white, up);
+        content: "";
+        position: absolute;
+        top: $fd-popover-arrow-top-front;
+        left: $fd-popover-arrow-x-offset;
+        z-index: $fd-popover-z-index + 2;
+      }
+
+      &::after {
+        @include triangle(13px 8px, fd-color('neutral', 4), up);
+        content: "";
+        position: absolute;
+        top: $fd-popover-arrow-top-back;
+        left: $fd-popover-arrow-x-offset;
+        z-index: $fd-popover-z-index + 1;
+      }
+
+      &--left {
+        right: auto;
+        left: -3px;
+
+        @include fd-rtl {
+          right: -3px;
+          left: auto;     
+          
+          &::before,
+          &::after {
+            right: $fd-popover-arrow-right;
+            left: unset;
+          }             
+        }
+
+        &::before,
+        &::after {
+          left: $fd-popover-arrow-x-offset;
+        }
+
+      }
+
+      &--right {
+        left: auto;
+        right: -3px;
+
+        @include fd-rtl {
+          right: auto;
+          left: -3px;     
+          
+          &::before,
+          &::after {
+            left: $fd-popover-arrow-right;
+            right: unset;
+          }             
+        }
+
+        &::before,
+        &::after {
+          left: auto;
+          right: $fd-popover-arrow-x-offset;
+        }
+
+      }
+
+      &--no-arrow{
+          top: $fd-popover-top-position-noarrow;
+
+          &::before,
+          &::after {
+              display: none;
+          }
+      }
+
+      &[aria-hidden="true"],
+      &.is-hidden {
+          z-index: 1;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY($fd-popover-transition-distance);
+      }   
+    }
+}

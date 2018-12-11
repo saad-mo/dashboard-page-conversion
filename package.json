@@ -1,0 +1,15 @@
+{
+  "name": "fdui-bs-static",
+  "version": "1.0.0",
+  "description": "Fiori Fundamentals and Bootstrap migration test project ",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bootstrap": "^4.1.3",
+    "fiori-fundamentals": "^1.4.0"
+  }
+}
