@@ -1,9 +1,9 @@
 # Dashboard page conversion
-Simple POC of converting a Dashbard page from Bootstrap to Fiori Fundamentals
+Simple POC of converting a Dashboard page from [Bootstrap](https://getbootstrap.com/) to [Fiori Fundamentals](https://sap.github.io/fundamental/)
 
 ## Dependencies
 - Bootstrap 4
-- Fiori Fundamentals
+- Fiori Fundamentals 1.4 and up
 
 ## Pages
 1. [Bootstrap template](dashboard-1-bs.html)
