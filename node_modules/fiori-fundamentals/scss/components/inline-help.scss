@@ -1,0 +1,145 @@
+@import "./../settings";
+@import "./../functions";
+@import "./../mixins";
+/*!
+.fd-tooltip
+    .fd-tooltip__content+(left, right, bottom-left, bottom-right)
+*/
+$block: #{$fd-namespace}-inline-help;
+.#{$block} {
+    //LOCAL VARS
+    $fd-tooltip-content-background-color: fd-color(background, 2) !default;
+    $fd-tooltip-content-color: fd-color(text, 2) !default;
+    $fd-tooltip-padding: fd-space(xs) !default;
+    $fd-tooltip-arrow-offset: fd-space(2) !default ;
+    $fd-tooltip-arrow-width: $fd-tooltip-arrow-offset !default;
+    $fd-tooltip-icon-size: 18px;
+    $fd-tooltip-transition-params: $fd-animation--speed ease-in !default;
+    $fd-tooltip-min-width: 350px !default;
+    $fd-tooltip-box-shadow: drop-shadow(rgba(0,0,0,0.1) 0 2px 10px) !default;
+
+    //BLOCK BASE *******************************************
+    @include fd-reset;
+    position: relative;
+    display: inline-block;
+    width: $fd-tooltip-icon-size;
+    height: $fd-tooltip-icon-size;
+    top: 3px;
+
+
+    &::before {
+        content: "?";
+        width: $fd-tooltip-icon-size;
+        height: $fd-tooltip-icon-size;
+        font-style: normal;
+        position: absolute;
+        left: 0;
+        color: fd-color("text", 5);
+        border-radius: 50%;
+        background-color: fd-color(text, 3);
+        text-align: center;
+    }
+
+    //ELEMENTS *******************************************
+    &__content {
+        @include fd-type("-1");
+        background: $fd-tooltip-content-background-color;
+        padding: $fd-tooltip-padding;
+        display: block;
+        position: absolute;
+        color: $fd-tooltip-content-color;
+        top: $fd-tooltip-padding * 2.5;
+        right: -$fd-tooltip-padding;
+        min-width: $fd-tooltip-min-width;
+        transition: opacity $fd-tooltip-transition-params;
+        text-align: left;
+        z-index: map-get($fd-z-index-levels, "first");
+        border-radius: 5px;
+        visibility: hidden;
+        opacity: 0;
+        border: 1px fd-color('neutral', 4) solid;
+
+        filter: $fd-tooltip-box-shadow;
+        &::before {
+            @include triangle(13px 8px, fd-color('neutral', 4), up);
+            content: "";
+            position: absolute;
+            top: -($fd-tooltip-arrow-offset);
+            right: $fd-tooltip-arrow-offset * 1.25;
+        }
+        &::after {
+            @include triangle(13px 8px, fd-color('background', 2), up);
+            content: "";
+            position: absolute;
+            top: -($fd-tooltip-arrow-offset - 2);
+            right: $fd-tooltip-arrow-offset * 1.25;
+        }
+        &--right{
+            top: -$fd-tooltip-padding;
+            left: $fd-tooltip-padding * 2.5;
+            &::before{
+                top: $fd-tooltip-arrow-offset + 8;
+                left: -($fd-tooltip-arrow-offset + 2);
+                transform: rotate(-90deg);
+            }
+            &::after{
+                top: $fd-tooltip-arrow-offset + 8;
+                left: -($fd-tooltip-arrow-offset + 1);
+                transform: rotate(-90deg);
+            }
+        }
+        &--left{
+            top: -$fd-tooltip-padding;
+            right: $fd-tooltip-padding * 2.5;
+            &::before{
+                top: $fd-tooltip-arrow-offset + 8;
+                right: -($fd-tooltip-arrow-offset + 2);
+                transform: rotate(90deg);
+            }
+            &::after{
+                top: $fd-tooltip-arrow-offset + 8;
+                right: -($fd-tooltip-arrow-offset + 1);
+                transform: rotate(90deg);
+            }
+        }
+        &--bottom-right{
+            left: -$fd-tooltip-arrow-offset;
+            &::before{
+                top: -($fd-tooltip-arrow-offset) ;
+                left: $fd-tooltip-arrow-offset * 1.4;
+            }
+            &::after {
+                top: -($fd-tooltip-arrow-offset - 1);
+                left: $fd-tooltip-arrow-offset * 1.375;
+            }
+        }
+        &--bottom-left{
+            right: -$fd-tooltip-arrow-offset;
+            &::before{
+                top: -($fd-tooltip-arrow-offset);
+                right: $fd-tooltip-arrow-offset * 1.25;
+            }
+            &::after{
+                top: -($fd-tooltip-arrow-offset - 1);
+            }
+        }
+        &--bottom-center{
+            right: -$fd-tooltip-arrow-offset * 20.25;
+            &::before{
+                top: -($fd-tooltip-arrow-offset) ;
+                right: $fd-tooltip-arrow-offset * 20.5;
+            }
+            &::after{
+                top: -($fd-tooltip-arrow-offset - 1);
+                right: $fd-tooltip-arrow-offset * 20.5;
+            }
+        }
+    }
+    &:hover{
+        .#{$block}__content{
+            visibility: visible;
+            opacity: 1;
+            overflow: visible;
+        }
+    }
+}

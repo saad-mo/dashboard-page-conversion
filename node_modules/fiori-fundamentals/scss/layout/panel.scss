@@ -1,0 +1,83 @@
+@import "./../settings";
+@import "./../functions";
+@import "./../mixins";
+/*!
+.fd-panel
+    .fd-panel__header
+        .fd-panel__title
+        .fd-panel__actions
+    .fd-panel__footer
+*/
+
+$block: #{$fd-namespace}-panel;
+.#{$block} {
+    $fd-panel-padding: fd-space("s") fd-space("reg") !default;
+    $fd-panel-border: none !default;
+    $fd-panel-background-color: fd-color("background",2) !default;
+    $fd-panel-box-shadow: 0 5px 20px 0 rgba(fd-color("text"), 0.08) !default;
+    $fd-panel-border-radius: $fd-border-radius !default;
+
+    $fd-panel-header-border-color: fd-color("neutral",2) !default;
+    $fd-panel-title-color: fd-color("text") !default;
+    $fd-panel-filters-padding: fd-space(3) fd-space("reg") !default;
+    $fd-panel-filters-border-color: $fd-panel-header-border-color !default;
+    $fd-panel-footer-padding: fd-space(4) fd-space("reg") !default;
+    $fd-panel-footer-border-color: $fd-panel-header-border-color !default;
+
+    //anim
+    $fd-panel-fiters-transition-params: 0.15s ease-in !default;
+
+    @include fd-clearfix;
+    background-color: $fd-panel-background-color;
+    box-shadow: $fd-panel-box-shadow;
+    border-radius: $fd-border-radius;
+    border: $fd-panel-border;
+    &__header {
+        min-height: fd-space(10);
+        display: flex;
+        align-items: center;
+        border-bottom: solid 1px $fd-panel-header-border-color;
+        padding: $fd-panel-padding;
+        @include fd-type("-1");
+        color: fd-color("text", 3);
+    }
+    &__title {
+        @include fd-type("1");
+        flex: 1;
+        margin-bottom: 0;
+        color: $fd-panel-title-color;
+    }
+    &__description {
+        margin-top: fd-space(base);
+    }
+    &__actions {
+        margin-left: auto;
+        margin-top: -#{fd-space(base)};
+        margin-bottom: -#{fd-space(base)};
+    }
+    &__filters {
+        padding: $fd-panel-filters-padding;
+        border-bottom: solid 1px $fd-panel-filters-border-color;
+        transition: all $fd-panel-fiters-transition-params;
+        &.is-hidden,
+        &[aria-hidden="true"] {
+          padding-top: 0;
+          padding-bottom: 0;
+          max-height: 0;
+          overflow: hidden;
+        }
+    }
+    &__body {
+        padding: $fd-panel-padding;
+        &--full-bleed,
+        &--bleed {
+          padding: 0;
+        }
+    }
+    &__footer {
+        display: flex;
+        justify-content: center;
+        padding: $fd-panel-footer-padding;
+        border-top: solid 1px $fd-panel-footer-border-color;
+    }
+}
